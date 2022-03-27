@@ -12,8 +12,7 @@
     from urllib.parse import unquote
 ```
 
-
-```shell
+>```shell
 >$ python SeatReserve.py --help
 >
 >	Usage:
@@ -37,4 +36,4 @@
 >		查询模式：
 >			-s	查询模式
 >			--name	姓名
-```
+>```
