@@ -8,7 +8,7 @@
     import datetime
     from urllib.parse import unquote
 
-$ python SeatReserve.py --help
+`$ python SeatReserve.py --help`
 
 	Usage:
 		自动预约模式：
