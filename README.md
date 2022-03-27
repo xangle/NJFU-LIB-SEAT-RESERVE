@@ -8,10 +8,11 @@
     import datetime
     from urllib.parse import unquote
 
-```key
+```shell
 $ python SeatReserve.py --help
 ```
 
+```shell
 	Usage:
 		自动预约模式：
 			-a	自动预约模式
@@ -34,4 +35,4 @@ $ python SeatReserve.py --help
 			-s	查询模式
 			--name	姓名
 			--seat	座位
-
+```
