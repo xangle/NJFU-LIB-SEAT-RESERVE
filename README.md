@@ -5,10 +5,13 @@
 
 > 依赖
 
+```python
     import requests
     import json
     import datetime
     from urllib.parse import unquote
+```
+
 
 ```shell
 $ python SeatReserve.py --help
