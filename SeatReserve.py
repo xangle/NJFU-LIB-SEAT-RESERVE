@@ -600,6 +600,21 @@ class LibSession:
 
         return reserved, seat_id
 
+    '''
+        根据姓名查找
+    '''
+    def FindByName(self, name):
+        seat = ''
+        for floor, room_id in roomID.items():
+            for items in self.all_seats_info[floor]:
+                seat = items[0][0]
+                for item in items:
+                    if name in item:
+                        seat = [seat]
+                        seat.append(item)
+                        print(seat)
+                        break
+
 
     '''
         预约座位
@@ -662,10 +677,9 @@ def Usage():
     print('\t\t手动预约模式：')
     print('\t\t\t-m\t手动预约模式')
     print('\n')
-    print('\t\t查询模式（不可同时查询姓名与座位）：')
+    print('\t\t查询模式：')
     print('\t\t\t-s\t查询模式')
     print('\t\t\t--name\t姓名')
-    print('\t\t\t--seat\t座位')
 
 
 if __name__ == '__main__':
@@ -706,8 +720,6 @@ if __name__ == '__main__':
         for value in argvs[1:]:
             if '--name=' in value:
                 name = value[7:]
-            elif '--seat=' in value:
-                seat = value[7:]
             elif '--date=' in value:
                 date = value[7:]
             else:
@@ -716,6 +728,8 @@ if __name__ == '__main__':
                 sys.exit(0)
         lib = LibSession('search')
         lib.GetAllSeatsInfo(date)
+        if name != '':
+            lib.FindByName(name)
     elif argvs[0] == '--help':
         Usage()
     else:

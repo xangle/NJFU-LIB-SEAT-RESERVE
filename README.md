@@ -36,8 +36,7 @@ $ python SeatReserve.py --help
 			-m	手动预约模式
 
 
-		查询模式（不可同时查询姓名与座位）：
+		查询模式：
 			-s	查询模式
 			--name	姓名
-			--seat	座位
 ```
