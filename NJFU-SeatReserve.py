@@ -1,3 +1,5 @@
+# -*- coding:utf-8 -*-
+
 import requests
 import sys
 import os
@@ -5,7 +7,6 @@ import json
 import datetime
 from urllib.parse import unquote
 import time
-import getopt
 
 global roomID
 roomID = {
@@ -715,6 +716,7 @@ if __name__ == '__main__':
         auto_lib.AutoReserve(stu_id, pwd, date, start, end)
     elif argvs[0] == '-m':
         lib_mannul = LibSession('mannul')
+        lib_mannul.DelayReserve(date)
         lib_mannul.MannuallyReserve()
     elif argvs[0] == '-s':
         name, seat = '', ''
