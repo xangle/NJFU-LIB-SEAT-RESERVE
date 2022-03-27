@@ -1,5 +1,12 @@
 # NJFU-LIB-SEAT-RESERVE
-南京林业大学图书馆座位预约
+## 南京林业大学图书馆座位预约
+### 依赖
+
+import requests
+import json
+import datetime
+from urllib.parse import unquote
+
 $ python SeatReserve.py --help
 
 	Usage:
