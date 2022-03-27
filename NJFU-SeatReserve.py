@@ -344,7 +344,6 @@ class LibSession:
 
     '''
         自动预约：
-        自动预约第二天靠窗座位
     '''
     def AutoReserve(self, stu_id, pwd, date, start, end):
         print('将优先预约%s的座位' % (self.floor))
@@ -359,8 +358,10 @@ class LibSession:
         def Reserving(date, start, end):
             try:
                 while True:
+                    # 预约靠窗座位
                     if WINDOW_SEAT:
                         self.seat_name = window_seat[self.floor][self.count]
+                    # 预约所有座位
                     if ALL_SEAT:
                         self.seat_name = all_seat[self.floor][self.count]
                     self.count = self.count + 1
