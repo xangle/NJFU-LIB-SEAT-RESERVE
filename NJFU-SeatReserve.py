@@ -331,15 +331,15 @@ class LibSession:
             self.seat_name = input('请输入要预约的座位：')
 
     '''
-        延时预约
+    延时预约，早上07:02开始预约
     '''
     def DelayReserve(self, date):
         now = datetime.datetime.now()
         date = datetime.datetime.strptime(date + ' ' + self.lib_reserve_begin, '%Y-%m-%d %H:%M')
         if date.day - now.day == 2:
-            sleep_time = (date - now).seconds + 60
-            print('将于%s %s小时%s分后预约' % (date.strftime('%Y-%m-%d'), sleep_time//3600, \
-                                            (sleep_time-(sleep_time//3600)*3600)//60))
+            sleep_time = (date - now).seconds + 121
+            print('预约日期%s，将于%s后预约' % (date.strftime('%Y-%m-%d'), \
+                                                                     datetime.timedelta(seconds = sleep_time)))
             for i in range(sleep_time):
                 time.sleep(1)
 
