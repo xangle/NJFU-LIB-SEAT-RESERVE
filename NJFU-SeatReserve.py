@@ -609,10 +609,9 @@ class LibSession:
         seat = ''
         for floor, room_id in roomID.items():
             for items in self.all_seats_info[floor]:
-                seat = items[0][0]
+                seat = [items[0][0]]
                 for item in items:
                     if name in item:
-                        seat = [seat]
                         seat.append(item)
                         print(seat)
                         break
@@ -729,6 +728,7 @@ if __name__ == '__main__':
                 print('参数有误')
                 Usage()
                 sys.exit(0)
+        print('正在查询...')
         lib = LibSession('search')
         lib.GetAllSeatsInfo(date)
         if name != '':
