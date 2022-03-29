@@ -336,7 +336,7 @@ class LibSession:
     def DelayReserve(self, date):
         now = datetime.datetime.now()
         date = datetime.datetime.strptime(date + ' ' + self.lib_reserve_begin, '%Y-%m-%d %H:%M')
-        if date.day - now.day != 1:
+        if date.day - now.day != 1 or date.hour - now.hour <= 7:
             sleep_time = (date - now).seconds + 121
             print('预约日期%s，将于%s后预约' % (date.strftime('%Y-%m-%d'), \
                                                                      datetime.timedelta(seconds = sleep_time)))
