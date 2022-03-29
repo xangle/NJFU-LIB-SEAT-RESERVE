@@ -336,7 +336,7 @@ class LibSession:
     def DelayReserve(self, date):
         now = datetime.datetime.now()
         date = datetime.datetime.strptime(date + ' ' + self.lib_reserve_begin, '%Y-%m-%d %H:%M')
-        if date.day - now.day == 2:
+        if date.day - now.day != 1:
             sleep_time = (date - now).seconds + 121
             print('预约日期%s，将于%s后预约' % (date.strftime('%Y-%m-%d'), \
                                                                      datetime.timedelta(seconds = sleep_time)))
@@ -667,13 +667,13 @@ def Usage():
     print('\t\t\t-a\t自动预约模式')
     print('\t\t\t--id\t学号')
     print('\t\t\t--pwd\t密码')
-    print('\t\t\t--day\t日期（xxxx-xx-xx）')
+    print('\t\t\t--date\t日期（xxxx-xx-xx）')
     print('\t\t\t--start\t预约开始时间（可选|默认8:00）')
     print('\t\t\t--end\t预约结束时间（可选|默认20:00）')
     print('\t\t\t--wins\t仅预约窗户旁的座位')
     print('\t\t\t--alls\t预约所有座位')
     print('\t\tEx:')
-    print('\t\t  -a --id=xxx --pwd=xxx --day=2022-03-27 --start=8:00 --end=20:00 --wins')
+    print('\t\t  -a --id=xxx --pwd=xxx --date=2022-03-27 --start=8:00 --end=20:00 --wins')
     print('\n')
     print('\t\t手动预约模式：')
     print('\t\t\t-m\t手动预约模式')
@@ -695,8 +695,8 @@ if __name__ == '__main__':
                 stu_id = value[5:]
             elif 'pwd' in value:
                 pwd = value[6:]
-            elif 'day' in value:
-                date = value[6:]
+            elif 'date' in value:
+                date = value[7:]
             elif 'start' in value:
                 start = value[8:]
             elif 'end' in value:
