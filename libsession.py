@@ -87,7 +87,6 @@ class LibSession:
                         continue
                     self.reserved[seat[0][0]].append(seat[i][1:])
 
-
         # 对已预约信息据时间排序
         for seat, info in self.reserved.items():
             infolen = len(info)

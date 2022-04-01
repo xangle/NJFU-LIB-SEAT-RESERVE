@@ -1,0 +1,8 @@
+# Ignore Mac system files
+.DS_store
+
+# Ignore __pycache__ floder
+__pycache__
+
+# Ignore files
+setup.sh
