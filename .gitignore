@@ -1,9 +1,6 @@
 # Ignore as . head
 .*
 
-# Ignore Mac system files
-.DS_store
-
 # Ignore __pycache__ floder
 __pycache__
 
