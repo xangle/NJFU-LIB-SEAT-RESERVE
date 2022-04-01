@@ -1,5 +1,4 @@
 import global_var
-
 import json
 import requests
 from datetime import datetime
