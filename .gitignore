@@ -7,5 +7,5 @@ __pycache__
 # Ignore files
 setup.sh
 
-# 不排除.gitignore和App.class:
-!.gitignore
+# 不排除.gitignore:
+#!.gitignore
