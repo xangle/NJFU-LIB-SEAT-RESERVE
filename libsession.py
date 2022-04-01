@@ -227,16 +227,25 @@ class LibSession:
                         if self.SeatReserve(date, start, end, seat_name, login_session):
                             return None
             if ALL_SEAT:
-                for seat_name in all_seat[floor]:
-                    if self.SeatReserve(date, start, end, seat_name, login_session):
-                        return None
+                print('=====> 尝试预约%s' % floor)
+                for seat_name in window_seat[floor]:
+                    if seat_name not in self.freetime.keys():
+                        continue
+                    if int(start[:2]) >= int(self.freetime[seat_name][1][0][11:13]) and \
+                            int(end[:2]) <= int(self.freetime[seat_name][1][1][11:13]):
+                        if self.SeatReserve(date, start, end, seat_name, login_session):
+                            return None
+                    if int(start[:2]) >= int(self.freetime[seat_name][1][0][11:13]) and \
+                            int(end[:2]) <= int(self.freetime[seat_name][1][1][11:13]):
+                        if self.SeatReserve(date, start, end, seat_name, login_session):
+                            return None
             print('=====> [%s无符合条件座位可预约！]' % (floor))
 
     '''
         预约座位
     '''
     def SeatReserve(self, date, start, end, seat, login_session):
-        reserved, seat_id = self.GetSeatInfo(seat, date, False)
+        reserved, seat_id = self.GetSeatInfo(seat, date, True)
         # 格式化预约时间段
         if len(start) == 4:
             start = '0' + start

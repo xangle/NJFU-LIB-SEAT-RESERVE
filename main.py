@@ -334,7 +334,6 @@ if __name__ == '__main__':
                 start = value[8:]
                 if len(start) < 5:
                     start = '0'+start
-                    print(start)
             elif 'end' in value:
                 end = value[6:]
             elif 'wins' in value:
