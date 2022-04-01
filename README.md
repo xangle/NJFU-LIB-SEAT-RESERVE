@@ -13,7 +13,7 @@
 ```
 
 >```shell
->$ python SeatReserve.py --help
+>$ python main.py --help
 >
 >	Usage:
 >		自动预约模式：
@@ -27,10 +27,6 @@
 >			--alls	预约所有座位
 >		Ex:
 >		  -a --id=xxx --pwd=xxx --day=2022-03-27 --start=8:00 --end=20:00 --wins
->
->
->		手动预约模式：
->			-m	手动预约模式
 >
 >
 >		查询模式：
