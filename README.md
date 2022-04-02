@@ -1,7 +1,7 @@
 # NJFU-LIB-SEAT-RESERVE
 ## 南京林业大学图书馆座位预约
 
-![njfulogo](https://github.com/xangle/NJFU-LIB-SEAT-RESERVE/blob/main/njfulogo.png)
+![njfulogo][./njfulogo.png]
 
 > 依赖
 
