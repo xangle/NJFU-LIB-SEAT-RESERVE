@@ -1,10 +1,10 @@
 # Ignore as . head
-.*
+.DS_Store
+.gitignore
+.git
 
 # Ignore __pycache__ floder
 __pycache__
 
 # Ignore files
 setup.sh
-
-# 不排除.gitignore:
