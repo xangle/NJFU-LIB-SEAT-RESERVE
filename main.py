@@ -1,3 +1,4 @@
+#!/usr/bin/env python3.9
 # -*- coding:utf-8 -*-
 
 import libsession
@@ -20,9 +21,9 @@ def Usage():
     print('\t\t查询模式：')
     print('\t\t\t-s\t查询模式')
     print('\t\t\t--name\t姓名')
+    print('\t\t\t--date\t查询日期')
 
-if __name__ == '__main__':
-    argvs = sys.argv[1:]
+def Command(argvs):
     if argvs == []:
         Usage()
         sys.exit(1)
@@ -71,3 +72,7 @@ if __name__ == '__main__':
     else:
         print('参数有误')
         Usage()
+
+
+if __name__ == '__main__':
+    Command(sys.argv[1:])
