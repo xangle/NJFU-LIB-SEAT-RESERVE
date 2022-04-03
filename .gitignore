@@ -1,6 +1,6 @@
 # Ignore as . head
-.DS_Store
-.gitignore
+*.DS_Store
+*.gitignore
 .git
 
 # Ignore __pycache__ floder
