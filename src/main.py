@@ -3,6 +3,7 @@
 
 import libsession
 import sys
+import json
 
 def Usage():
     print('\tUsage:')
@@ -18,17 +19,23 @@ def Usage():
     print('\t\tEx:')
     print('\t\t  -a --id=xxx --pwd=xxx --date=2022-03-27 --start=8:00 --end=20:00 --wins')
     print('\n')
+    print('\t\t配置文件模式：')
+    print('\t\t\t-c\t配置文件')
+    print('\n')
     print('\t\t查询模式：')
     print('\t\t\t-s\t查询模式')
     print('\t\t\t--name\t姓名')
     print('\t\t\t--date\t查询日期')
 
 def Command(argvs):
+    start, end, WINDOW_SEAT, ALL_SEAT = '8:00', '20:00', False, False
+
     if argvs == []:
         Usage()
         sys.exit(1)
+
+    # 自动预约模式命令行解析
     if argvs[0] == '-a':
-        start, end, WINDOW_SEAT, ALL_SEAT = '8:00', '20:00', False, False
         for value in argvs[1:]:
             if 'id' in value:
                 stu_id = value[5:]
@@ -52,6 +59,14 @@ def Command(argvs):
                 sys.exit(1)
         auto_lib = libsession.LibSession('auto', date)
         auto_lib.AutoReserve(stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT)
+
+    # 配置文件命令行解析
+    elif argvs[0] == '-c':
+        stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT = ReserveInfo()
+        lib = libsession.LibSession('auto', date)
+        lib.AutoReserve(stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT)
+
+    #  查询模式命令行解析
     elif argvs[0] == '-s':
         name, seat = '', ''
         for value in argvs[1:]:
@@ -67,12 +82,30 @@ def Command(argvs):
         lib = libsession.LibSession('search', date)
         if name != '':
             lib.FindByName(name)
+
     elif argvs[0] == '--help':
         Usage()
     else:
         print('参数有误')
         Usage()
 
+def ReserveInfo():
+    WINDOW_SEAT, ALL_SEAT = False, False
+
+    with open('reserve.json', 'r') as f:
+        info = json.loads(f.read())
+
+    stu_id = info['id']
+    pwd = info['pwd']
+    date = info['date']
+    start = info['start']
+    end = info['end']
+    if info['seats'] == 'wins':
+        WINDOW_SEAT = True
+    else:
+        ALL_SEAT = True
+
+    return stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT
 
 if __name__ == '__main__':
     Command(sys.argv[1:])

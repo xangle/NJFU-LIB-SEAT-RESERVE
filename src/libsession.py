@@ -1,7 +1,7 @@
 import global_var
 import json
 import requests
-from datetime import datetime
+import datetime
 from urllib.parse import unquote
 import time
 
@@ -11,7 +11,7 @@ roomID, window_seat = global_var._init()
 global all_seat
 all_seat = {}
 global now
-now = datetime.now()
+now = datetime.datetime.now()
 
 class LibSession:
     '''
