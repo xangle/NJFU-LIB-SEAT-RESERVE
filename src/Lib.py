@@ -173,7 +173,6 @@ class Lib:
     '''
     def getSeatInfo(self, seat_name, date):
         reserved = []
-
         for floor in roomID.keys():
             for num in range(len(self.all_seats_info[floor])):
                 if self.all_seats_info[floor][num][0][0] == seat_name:
