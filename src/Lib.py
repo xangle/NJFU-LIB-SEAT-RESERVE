@@ -76,13 +76,6 @@ class Lib:
                     end = response['data'][count_data]['ts'][count_ts]['end']
                     self.all_seats_info[floor][count_data].append([owner, start, end])
 
-        # 获取所有楼层名:座位名
-        all_seats = {}
-        for floor, room_id in roomID.items():
-            all_seats[floor] = []
-            for items in self.all_seats_info[floor]:
-                all_seats[floor].append(items[0][0])
-
         # 图书馆开/闭馆时间
         self.lib_open = response['data'][0]['ops'][0]['date'] + response['data'][0]['ops'][0]['start']
         self.lib_close = response['data'][0]['ops'][0]['date'] + response['data'][0]['ops'][0]['end']
@@ -117,7 +110,7 @@ class Lib:
                 self.freetime[seat] = [info[0]]
                 if timea > 3:
                     self.freetime[seat].append([self.lib_open, info[1][0]])
-                if timeb > 3:
+                elif timeb > 3:
                     self.freetime[seat].append([info[1][1], self.lib_close])
 
         return self.freetime
@@ -141,7 +134,7 @@ class Lib:
                 if json.loads(s = response)['msg'] == 'ok':
                     print('  ---> 登录成功！')
                     break
-                if json.loads(s = response)['msg'] == '未获取到相关提示信息':
+                elif json.loads(s = response)['msg'] == '未获取到相关提示信息':
                     print('  ---> 用户名或密码输入错误！')
                     os._exit(1) # 从系统终止程序
             except:
@@ -178,7 +171,7 @@ class Lib:
     '''
         打印并返回座位已预约时间信息以及返回座位id
     '''
-    def getSeatInfo(self, seat_name, date, printing):
+    def getSeatInfo(self, seat_name, date):
         reserved = []
         for floor in roomID.keys():
             for num in range(len(self.all_seats_info[floor])):
@@ -187,13 +180,13 @@ class Lib:
                     for i in range(len(self.all_seats_info[floor][num]) - 1):
                         reserved.append(self.all_seats_info[floor][num][i+1])
 
-        if printing:
-            # 打印当前座位预约信息
-            print('>>>> 当日已预约(%s)：' % (date))
-            if reserved == []:
-                print("  ---> %s日无预约" % date)
-            for owner in reserved:
-                print('  ---> %s: %s～%s' % (owner[0], owner[1][-5:], owner[2][-5:]))
+        # 打印当前座位预约信息
+        print('>>>> 当日已预约(%s)：' % (date))
+        if reserved == []:
+            print("  ---> %s日无预约" % date)
+            return seat_id
+        for owner in reserved:
+            print('  ---> %s: %s～%s' % (owner[0], owner[1][-5:], owner[2][-5:]))
 
         return seat_id
 
@@ -201,14 +194,14 @@ class Lib:
         预约座位实现，预约成功返回True，预约失败返回False
     '''
     def seatReserve(self, date, start, end, seat, login_session):
-        # 传入座位名获取座位id
-        seat_id = self.getSeatInfo(seat, date, True)
+        # 传入座位名获取座位id，打印当天预约详细信息
+        seat_id = self.getSeatInfo(seat, date)
         # 格式化预约时间段
         if len(start) == 4:
             start = '0' + start
-        if len(end) == 4:
+        elif len(end) == 4:
             end = '0' + end
-        if int(end[:-3]) > int(self.lib_close[11:-3]):
+        elif int(end[:-3]) > int(self.lib_close[11:-3]):
             end = self.lib_close[11:]
             print("预约结束时间大于当日图书馆闭馆时间，已自动将结束时间更改为当日闭馆时间")
         start_time, end_time = start[:2] + start[3:], end[:2] + end[3:]
