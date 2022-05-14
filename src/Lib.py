@@ -139,7 +139,7 @@ class Lib:
             try:
                 response = login_session.post(url = login_url, params = login_params).text
                 if json.loads(s = response)['msg'] == 'ok':
-                    print(' ---> 登录成功！')
+                    print('  ---> 登录成功！')
                     break
                 if json.loads(s = response)['msg'] == '未获取到相关提示信息':
                     print('  ---> 用户名或密码输入错误！')
