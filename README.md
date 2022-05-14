@@ -5,11 +5,10 @@
 
 > 依赖
 
-```python
-    import requests
-    import json
-    import datetime
-    from urllib.parse import unquote
+```p
+    requests
+    json
+    unquote
 ```
 
 >```shell
