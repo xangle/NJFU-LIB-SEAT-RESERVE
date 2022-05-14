@@ -3,7 +3,7 @@
 
 ![njfulogo](/images/logonew.png)
 
->```python
+```python
 >依赖
 >   requests
 >   json
