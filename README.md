@@ -4,37 +4,38 @@
 ![njfulogo](/images/logonew.png)
 
 > 依赖
-
-```p
-    requests
-    json
-    unquote
-```
+>    requests
+>    json
+>    unquote
 
 >```shell
->$ python main.py --help
->
->	Usage:
->		自动预约模式：
->			-a	自动预约模式
->			--id	学号
->			--pwd	密码
->			--day	日期（xxxx-xx-xx）
->			--start	预约开始时间（可选|默认8:00）
->			--end	预约结束时间（可选|默认20:00）
->			--wins	仅预约窗户旁的座位
->			--alls	预约所有座位
->		Ex:
->		  -a --id=xxx --pwd=xxx --day=2022-03-27 --start=8:00 --end=20:00 --wins
->
->		配置文件模式：
->			-c	配置文件
->
->		查询模式：
->			-s	查询模式
->			--name	姓名
->			--date	查询日期
->```
+>$ python main.py
+
+```json
+>    {
+>        "userid": "userid",
+>        "passwd": "password",
+>        "date": "2022-05-15",
+>        "start": "09:00",
+>        "end": "22:00",
+>        "seat": "4F-A001",
+>        "window": true,
+>        "area": false,
+>        "areas": {
+>            "二层A区":  5,
+>            "二层B区":  6,
+>            "三层A区":  2,
+>            "三层B区":  3,
+>            "三层C区":  4,
+>            "四层A区":  1,
+>            "五层A区":  9,
+>            "六层":     10,
+>            "七层北侧": 11,
+>            "三楼夹层": 7,
+>            "四楼夹层": 8
+>        }
+>    }
+```
 
 #### 预览:
 ![preview](/images/preview.jpg)
