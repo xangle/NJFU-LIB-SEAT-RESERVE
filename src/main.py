@@ -1,111 +1,81 @@
-#!/usr/bin/env python3.9
-# -*- coding:utf-8 -*-
-
-import libsession
-import sys
+import Lib
 import json
 
-def Usage():
-    print('\tUsage:')
-    print('\t\t自动预约模式：')
-    print('\t\t\t-a\t自动预约模式')
-    print('\t\t\t--id\t学号')
-    print('\t\t\t--pwd\t密码')
-    print('\t\t\t--date\t日期（xxxx-xx-xx）')
-    print('\t\t\t--start\t预约开始时间（可选|默认8:00）')
-    print('\t\t\t--end\t预约结束时间（可选|默认20:00）')
-    print('\t\t\t--wins\t仅预约窗户旁的座位')
-    print('\t\t\t--alls\t预约所有座位')
-    print('\t\tEx:')
-    print('\t\t  -a --id=xxx --pwd=xxx --date=2022-03-27 --start=8:00 --end=20:00 --wins')
-    print('\n')
-    print('\t\t配置文件模式：')
-    print('\t\t\t-c\t配置文件')
-    print('\n')
-    print('\t\t查询模式：')
-    print('\t\t\t-s\t查询模式')
-    print('\t\t\t--name\t姓名')
-    print('\t\t\t--date\t查询日期')
+import global_var
+global roomID
+global window_seat
+roomID, window_seat = global_var._init()
 
-def Command(argvs):
-    start, end, WINDOW_SEAT, ALL_SEAT = '8:00', '20:00', False, False
 
-    if argvs == []:
-        Usage()
-        sys.exit(1)
-
-    # 自动预约模式命令行解析
-    if argvs[0] == '-a':
-        for value in argvs[1:]:
-            if 'id' in value:
-                stu_id = value[5:]
-            elif 'pwd' in value:
-                pwd = value[6:]
-            elif 'date' in value:
-                date = value[7:]
-            elif 'start' in value:
-                start = value[8:]
-                if len(start) < 5:
-                    start = '0'+start
-            elif 'end' in value:
-                end = value[6:]
-            elif 'wins' in value:
-                WINDOW_SEAT = True
-            elif 'alls' in value:
-                ALL_SEAT = True
-            else:
-                print('参数有误')
-                Usage()
-                sys.exit(1)
-        auto_lib = libsession.LibSession('auto', date)
-        auto_lib.AutoReserve(stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT)
-
-    # 配置文件命令行解析
-    elif argvs[0] == '-c':
-        stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT = ReserveInfo()
-        lib = libsession.LibSession('auto', date)
-        lib.AutoReserve(stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT)
-
-    #  查询模式命令行解析
-    elif argvs[0] == '-s':
-        name, seat = '', ''
-        for value in argvs[1:]:
-            if '--name=' in value:
-                name = value[7:]
-            elif '--date=' in value:
-                date = value[7:]
-            else:
-                print('参数有误')
-                Usage()
-                sys.exit(0)
-        print('正在查询...')
-        lib = libsession.LibSession('search', date)
-        if name != '':
-            lib.FindByName(name)
-
-    elif argvs[0] == '--help':
-        Usage()
+def getFloorHead(floor):
+    if floor == "二层A区":
+        return "2F-A"
+    elif floor == "二层B区":
+        return "2F-B"
+    elif floor == "三层A区":
+        return "3F-A"
+    elif floor == "三层B区":
+        return "3F-B"
+    elif floor == "三层C区":
+        return "3F-C"
+    elif floor == "四层A区":
+        return "4F-A"
+    elif floor == "五层A区":
+        return "5F-A"
+    elif floor == "六层":
+        return "6F-A"
+    elif floor == "七层北侧":
+        return "7F-A"
+    elif floor == "三楼夹层":
+        return "3FA-"
+    elif floor == "四楼夹层":
+        return "4FA-"
     else:
-        print('参数有误')
-        Usage()
+        return None
 
-def ReserveInfo():
-    WINDOW_SEAT, ALL_SEAT = False, False
 
-    with open('reserve.json', 'r') as f:
-        info = json.loads(f.read())
+# 读取Json内容
+with open("reserve.json", "r") as f:
+    data = json.loads(f.read())
+userid = data["userid"]
+passwd = data["passwd"]
+date = data["date"]
+start = data["start"]
+end = data["end"]
+seat = data["seat"]
+area = data["area"]
+areas = data["areas"]
+window = data["window"]
 
-    stu_id = info['id']
-    pwd = info['pwd']
-    date = info['date']
-    start = info['start']
-    end = info['end']
-    if info['seats'] == 'wins':
-        WINDOW_SEAT = True
-    else:
-        ALL_SEAT = True
+# 初始化图书馆，获取当日图书馆的所有预约信息
+print(">>>> 正在获取图书馆预约数据...")
+njfulib = Lib.Lib(date)
+freetime = njfulib.getReservedData()
 
-    return stu_id, pwd, date, start, end, WINDOW_SEAT, ALL_SEAT
+# 单座位精准预约
+if not area:
+    njfulib.seatReserve(date, start, end, seat, njfulib.loginLib(userid, passwd))
 
-if __name__ == '__main__':
-    Command(sys.argv[1:])
+# 如果只预约窗边的座位，那么删除freetime中的非窗边座位
+if window:
+    window_seats = []
+    for floor, seats in window_seat.items():
+        for seat in seats:
+            window_seats.append(seat)
+    keys = list(freetime.keys())
+    for key in keys:
+        if key not in window_seats:
+            freetime.pop(key)
+
+# 楼层区域优先级预约
+if area:
+    for count in range(1, 12):
+        for floor, priority in areas.items():
+            if priority == count:
+                print("  ---> 正在检查%s有无合适座位..." % floor)
+                for seat, infos in freetime.items():
+                    if seat[0:4] == getFloorHead(floor):
+                        for info in infos[1:]:
+                            if int(info[0][-5:-3]) <= int(start[:2]) and int(end[:2]) <= int(info[1][-5:-3]):
+                                njfulib.seatReserve(date, start, end, seat, njfulib.loginLib(userid, passwd))
+                                exit(0)
