@@ -10,16 +10,16 @@
 >> 一种是area为true的状态，可以根据设置的楼层优先级不同，优先预约数字最小的楼层区域的座位。
 >> - 如果window变量为true，则仅预约窗边座位；如果为false，则顺序尝试预约全部的座位。
 
-```python
+**```python
 依赖
-   __requests__
-   __json__
-   __unquote__
-```
+   requests
+   json
+   unquote
+```**
 
-```shell
-$ ***python main.py***
-```
+***```shell
+$ python main.py
+```***
 
 ```json
 {
@@ -49,5 +49,7 @@ $ ***python main.py***
 
 #### 预览:
 ![preview](/images/preview.jpg)
+
+****
 
 ### 此项目仅作为私人座位预约以及学习使用
