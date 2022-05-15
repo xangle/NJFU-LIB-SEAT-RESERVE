@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: UTF-8 -*-
+
 import Lib
 import json
 
@@ -36,7 +39,7 @@ def getFloorHead(floor):
 
 
 # 读取Json内容
-with open("reserve.json", "r") as f:
+with open("reserve.json", "r", encoding="utf-8") as f:
     data = json.loads(f.read())
 userid = data["userid"]
 passwd = data["passwd"]
