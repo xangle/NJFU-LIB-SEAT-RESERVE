@@ -2,6 +2,7 @@ import Lib
 import json
 
 import global_var
+
 global roomID
 global window_seat
 roomID, window_seat = global_var._init()

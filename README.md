@@ -3,15 +3,21 @@
 
 ![njfulogo](/images/logonew.png)
 
+> #### 预约脚本有两种模式：
+> 
+>> 一种是area为false状态，为精确预约模式，此时只预约seat对应的座位，若时间冲突则预约失败。
+>> 一种是area为true的状态，可以根据设置的楼层优先级不同，优先预约数字最小的楼层区域的座位。
+>> - 如果window变量为true，则仅预约窗边座位；如果为false，则预约顺序尝试预约全部的座位。
+
 ```python
 依赖
-   requests
-   json
-   unquote
+   **requests**
+   **json**
+   **unquote**
 ```
 
 ```shell
-$ python main.py
+$ ***python main.py***
 ```
 
 ```json
