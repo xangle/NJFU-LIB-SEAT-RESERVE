@@ -104,14 +104,15 @@ class Lib:
                 self.freetime[seat] = [info[0], [self.lib_open, self.lib_close]]
                 continue
             # 仅有一个预约时，补充符合条件的时间段到可预约时间段字典中
-            timea = int(info[1][0][-5:-3]) - int(self.lib_open[-5:-3])
-            timeb = int(self.lib_close[-5:-3]) - int(info[1][1][-5:-3])
-            if len(info) == 2 and timea > 3 or timeb > 3:
-                self.freetime[seat] = [info[0]]
-                if timea > 3:
-                    self.freetime[seat].append([self.lib_open, info[1][0]])
-                elif timeb > 3:
-                    self.freetime[seat].append([info[1][1], self.lib_close])
+            if len(info) == 2:
+                timea = int(info[1][0][-5:-3]) - int(self.lib_open[-5:-3])
+                timeb = int(self.lib_close[-5:-3]) - int(info[1][1][-5:-3])
+                if timea > 3 or timeb > 3:
+                    self.freetime[seat] = [info[0]]
+                    if timea > 3:
+                        self.freetime[seat].append([self.lib_open, info[1][0]])
+                    elif timeb > 3:
+                        self.freetime[seat].append([info[1][1], self.lib_close])
 
         return self.freetime
 
